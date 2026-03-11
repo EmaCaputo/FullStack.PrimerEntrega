@@ -1,5 +1,5 @@
 # FullStack.PrimerEntrega
 
-crear el json puedo usar Express que me genera la estructura basica.
+Cada vez que creo el proyecto debo correr: npm install para crear las dependencias.
 
-Debo usar los controllers, los models y los routes.
+Abro el proyecto con: npm run dev o npm start.
