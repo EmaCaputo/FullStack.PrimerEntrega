@@ -1,6 +1,6 @@
 //defino mis constantes.
 
 module.exports = {
-    PORT: 3000,
-    DB: "COMPLETAR"
+    PORT: 8080,
+    DB: "mongodb://localhost:27017/arfuch"
 }

@@ -1,8 +1,15 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 const path = require('path');
+const productoRoutes = require('./routes/productoRoutes'); //Importo las rutas de productos
 
-const app = express();
-const PORT = 3000;
+const app = express(); //Levanto la APP (Objeto app)
+
+//Cargo los modulos de la APP dentro del Route.
+
+app.use(bodyParser.json()); //genero el bodyparser para los envios de Json.
+app.use(bodyParser.urlencoded({extended: false}));
+app.use('/api/productos', productoRoutes); //Uso las rutas de productos, con el prefijo /api/productos
 
 // cuando inicio mi pagina, llamo a la vista
 app.get('/', (req, res) => {

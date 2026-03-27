@@ -1,7 +1,7 @@
 {
   "name": "fullstack.primerentrega",
   "version": "1.0.0",
-  "description": "crear el json puedo usar Express que me genera la estructura basica.",
+  "description": "Tp de FullStack.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,9 +21,11 @@
   },
   "homepage": "https://github.com/EmaCaputo/FullStack.PrimerEntrega#readme",
   "dependencies": {
+    "body-parser": "^2.2.2",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongoose": "^9.3.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
