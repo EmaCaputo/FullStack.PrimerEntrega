@@ -11,11 +11,21 @@ function listall(req, res) {
 }
 
 function create(req, res) {
-    let tipo = new Tipo(req.body);
-    tipo.save()
-        .then(tipo => res.status(201).send({ tipo }))
-        .catch(err => res.status(400).send({ message: err.message }));
-}
+    if (!req.body.nombre) {
+        return res.status(400).send({ message: 'El nombre del tipo es requerido' });
+    }
+    Tipo.findOne({ nombre: req.body.nombre })
+            .then(existe => {
+                if (existe) {
+                    return res.status(400).send({ message: 'El nombre del tipo ya existe' });
+                }
+                const tipo = new Tipo({ nombre: req.body.nombre });
+                return tipo.save()
+                    .then(tipoGuardado => res.status(201).send({ tipo: tipoGuardado }));
+            })
+            .catch(err => res.status(500).send({ message: err.message }));
+    }
+
 
 function show(req, res) {
     if(req.body.error) return res.status(500).send({ message: req.body.error });
@@ -35,82 +45,40 @@ function update(req, res) {
 }
 
 function deleted(req, res) {
-    if(req.body.error) return res.status(500).send({ message: req.body.error });
-    if(!req.body.tipo) return res.status(404).send({ message: 'Tipo no encontrado' });
-    req.body.tipo[0].remove()
-        .then(tipo => {
-            res.status(200).send({ message: 'Tipo eliminado', tipo }) 
-        }).catch(err => res.status(400).send({ message: err.message }));
+    if(req.error) {
+        return res.status(500).send({ message: req.error });
+    }
+    if(!req.tipo) {
+        return res.status(404).send({ message: 'Tipo no encontrado' });
+    }
+    req.tipo.deleteOne()
+        .then(() => {
+            res.status(200).send({ message: 'Tipo eliminado' });
+        })
+        .catch(err => res.status(400).send({ message: err.message }));
 }
+
 
 function find(req, res, next) {
+    const { key, value } = req.params;
     let query = {};
-    query[req.params.key] = req.params.value
-    Color.find(query)
-        .then(color => {
-            if(!color.length) return next();
-            req.body.color = color;
-            return next();
-        }).catch(err => {
-            req.body.error = err.message;
+    if (key === 'nombre') {
+        query[key] = new RegExp(`^${value}$`, 'i');
+    } else {
+        query[key] = value;
+    }
+    Tipo.findOne(query)
+        .then(tipo => {
+            if (!tipo) {
+                return res.status(404).send({ message: 'Tipo no encontrado' });
+            }
+            req.tipo = tipo;
             next();
         })
+        .catch(err => res.status(500).send({ message: err.message }));
+
 }
-/*
-//Crear producto
-exports.crearProducto = async (req, res) => {
-    try {
-        const producto = new Producto(req.body);
-        const savedProducto = await producto.save();
-        res.status(201).json(savedProducto);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
 
-//Obtener Todos los productos
-exports.obtenerProductos = async (req, res) => {
-    try {
-        const productos = await Producto.find();
-        res.status(200).json(productos);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-//Obtener producto por ID
-exports.obtenerProductoPorId = async (req, res) => {
-    try {
-        const producto = await Producto.findById(req.params.id);
-        if (!producto) return res.status(404).json({ message: 'Producto no encontrado' });
-        res.status(200).json(producto);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-//Actualizar producto
-exports.actualizarProducto = async (req, res) => {
-    try {
-        const updatedProducto = await Producto.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!updatedProducto) return res.status(404).json({ message: 'Producto no encontrado' });
-        res.status(200).json(updatedProducto);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
-
-//Eliminar producto
-exports.eliminarProducto = async (req, res) => {
-    try {
-        const deletedProducto = await Producto.findByIdAndDelete(req.params.id);
-        if (!deletedProducto) return res.status(404).json({ message: 'Producto no encontrado' });
-        res.status(200).json({ message: 'Producto eliminado' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-*/
 
 module.exports = {
     listall,

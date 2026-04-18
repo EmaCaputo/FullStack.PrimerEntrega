@@ -1,8 +1,8 @@
 const { log } = require('node:console');
 const app = require('./app/app');
 const config = require('./app/config/config');
-const mongoose = require('mongoose');
 const db = require('./app/config/database');
+require('dotenv').config();
 
 
 async function startServer() {

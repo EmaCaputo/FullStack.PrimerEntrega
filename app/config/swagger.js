@@ -1,5 +1,6 @@
 const swaggerJSDoc = require('swagger-jsdoc');
 const config = require('./config');
+const path = require('path');
 
 const options = {
   definition: {
@@ -9,15 +10,19 @@ const options = {
       version: '1.0.0',
       description: 'Documentación de la API de productos',
     },
+
     servers: [
       {
         url: `http://localhost:${config.PORT}`,
       },
     ],
   },
-  apis: ['./routes/*.js'], // aca defino mis rutas para que swagger las lea y genere la documentación, en este caso todas las rutas dentro de la carpeta routes
+  apis: [
+  path.join(process.cwd(), 'app/routes/*.js')
+]
 };
 
 const swaggerSpec = swaggerJSDoc(options);
+
 
 module.exports = swaggerSpec;

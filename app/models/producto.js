@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
     nombre: { 
         type: String,
-        unique: true,
-        required: true 
+        required: true,
+        unique: true
     },
     tipo: { 
         type: mongoose.Schema.Types.ObjectId, 
