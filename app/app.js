@@ -28,11 +28,5 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname,'/views/text.html'));
 });
 
-/*
 
-// Mensaje con un estado, en este caso envio un Json
-app.get('/', (req, res) => {
-    res.status(200).send({message: "Bienvenido a mi appi rest"})
-})
-*/
 module.exports = app;
