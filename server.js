@@ -11,6 +11,7 @@ async function startServer() {
 
     app.listen(config.PORT, () => {
       console.log(`🚀 Servidor corriendo en: http://localhost:${config.PORT}`); //levanto el puerto
+      console.log(`📚 Documentacion corriendo en: http://localhost:${config.PORT}/api-docs`); //indico donde esta la documentacion
     });
 
   } catch (error) {

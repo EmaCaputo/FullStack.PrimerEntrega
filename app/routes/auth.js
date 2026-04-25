@@ -55,8 +55,27 @@ router.post('/register', AuthController.register);
  *     responses:
  *       200:
  *         description: Inicio de sesión exitoso
+ *       400:
+ *         description: Usuario no encontrado o contraseña incorrecta
  */
+
 router.post('/login', AuthController.login);
+
+
+/**
+ * @swagger 
+ *  /auth/me:
+ *   get:
+ *     summary: Obtener información del usuario autenticado
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Información del usuario autenticado
+ *       401:
+ *         description: Token no proporcionado o inválido
+ */
 router.get('/me', auth, AuthController.me);
 
 
