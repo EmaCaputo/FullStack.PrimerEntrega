@@ -7,7 +7,7 @@ const tipoRoutes = require('./routes/tipoRoutes'); //Importo las rutas de tipos
 const categoriaRoutes = require('./routes/categoriaRoutes'); //Importo las rutas de categorias
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
-const authRoutes = require('./routes/auth'); //Importo las rutas de autenticación
+const authRoutes = require('./routes/authRoutes'); //Importo las rutas de autenticación
 const authorize = require('./middleware/authorize'); //Importo el middleware de autorización
 
 const app = express(); //Levanto la APP (Objeto app)
