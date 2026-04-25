@@ -26,7 +26,7 @@ function show(req, res) {
 }
 
 function update(req, res) {
-    let producto = req.productos[0];
+    let producto = req.producto;
 
     producto = Object.assign(producto, req.body);
 

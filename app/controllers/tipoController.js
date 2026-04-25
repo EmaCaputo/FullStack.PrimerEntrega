@@ -35,10 +35,10 @@ function show(req, res) {
 }
 
 function update(req, res) {
-    if(req.body.error) return res.status(500).send({ message: req.body.error });
-    if(!req.body.tipo) return res.status(404).send({ message: 'Tipo no encontrado' });
-    let tipo = req.body.tipo[0];
+    let tipo = req.tipo;
+
     tipo = Object.assign(tipo, req.body);
+
     tipo.save()
         .then(tipo => res.status(200).send({ message: 'Tipo actualizado', tipo }))
         .catch(err => res.status(400).send({ message: err.message }));
